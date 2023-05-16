@@ -17,7 +17,6 @@ const HomeScreen = () => {
     { id: 1, title: 'Recept 1', image: require('./assets/images/recipe1.jpg') },
     { id: 2, title: 'Recept 2', image: require('./assets/images/recipe2.jpg') },
     { id: 3, title: 'Recept 3', image: require('./assets/images/recipe1.jpg') },
-
   ];
 
   const handleFilterPress = () => {
@@ -30,18 +29,28 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-      <View style={styles.menu}>
-        <Text style={styles.headingMenu}>FOOD COURSE</Text>
-        <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
-          <Text style={styles.filterButtonText}>Filter</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cardContainer}>
-        {recipes.map(recipe => (
-          <RecipeCard key={recipe.id} title={recipe.title} image={recipe.image} />
-        ))}
-      </View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headingMenu}>FOOD COURSE</Text>
+          <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
+            <Text style={styles.filterButtonText}>Filter</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.headerImageContainer}>
+          <Image
+            source={require('./assets/images/recipe1.jpg')}
+            style={styles.headerImage}
+            resizeMode="cover"
+          />
+          <View style={styles.imageOverlay}>
+            <Text style={styles.headerText}>Welcome to Food Course!</Text>
+          </View>
+        </View>
+        <View style={styles.cardContainer}>
+          {recipes.map(recipe => (
+            <RecipeCard key={recipe.id} title={recipe.title} image={recipe.image} />
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
@@ -56,11 +65,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
   },
-  menu: {
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 30,
+    padding: 10,
     marginTop: 40,
+    marginBottom: 20,
   },
   filterButton: {
     backgroundColor: 'lightgreen',
@@ -74,9 +84,32 @@ const styles = StyleSheet.create({
   },
   headingMenu: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#000000',
+  },
+  headerImageContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  headerImage: {
+    width: '100%',
+    height: 200,
+  },
+  imageOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color:'white',
   },
   cardContainer: {
     flexDirection: 'column',
@@ -85,11 +118,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    width: '90%',
+    width: '100%',
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
+    paddingBottom: 10,
+    marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -100,12 +133,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     width: '100%',
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 10,
+    height: 170,
+    marginBottom: 15,
   },
   title: {
+    padding: 10,
     fontSize: 16,
     fontWeight: 'bold',
   },
