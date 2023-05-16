@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import FilterScreen from './FilterScreen';
+import AboutCourses from './AboutCourses';
 
-const RecipeCard = ({ title, image }) => {
+const RecipeCard = ({ title, image, onPress }) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const HomeScreen = () => {
-  const [showFilter, setShowFilter] = useState(false); // initierar med att inte visa filter-vyn
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
   const recipes = [
     { id: 1, title: 'Recept 1', image: require('./assets/images/recipe1.jpg') },
     { id: 2, title: 'Recept 2', image: require('./assets/images/recipe2.jpg') },
@@ -20,11 +23,19 @@ const HomeScreen = () => {
   ];
 
   const handleFilterPress = () => {
-    setShowFilter(true); // visar filter-vyn
+    setShowFilter(true);
+  };
+
+  const handleRecipePress = (recipe) => {
+    setSelectedRecipe(recipe);
   };
 
   if (showFilter) {
     return <FilterScreen setShowFilter={setShowFilter} />;
+  }
+
+  if (selectedRecipe) {
+    return <AboutCourses recipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe} />;
   }
 
   return (
@@ -33,8 +44,9 @@ const HomeScreen = () => {
         <View style={styles.headerContainer}>
           <Text style={styles.headingMenu}>FOOD COURSE</Text>
           <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
-            <Text style={styles.filterButtonText}>Filter</Text>
+            <Text style={styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
+          
         </View>
         <View style={styles.headerImageContainer}>
           <Image
@@ -48,7 +60,12 @@ const HomeScreen = () => {
         </View>
         <View style={styles.cardContainer}>
           {recipes.map(recipe => (
-            <RecipeCard key={recipe.id} title={recipe.title} image={recipe.image} />
+            <RecipeCard
+              key={recipe.id}
+              title={recipe.title}
+              image={recipe.image}
+              onPress={() => handleRecipePress(recipe)}
+            />
           ))}
         </View>
       </ScrollView>
@@ -73,7 +90,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   filterButton: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#93bf85',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -81,12 +98,14 @@ const styles = StyleSheet.create({
   filterButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'white',
   },
   headingMenu: {
     flex: 1,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '900',
     color: '#000000',
+    letterSpacing: 2,
   },
   headerImageContainer: {
     alignItems: 'center',

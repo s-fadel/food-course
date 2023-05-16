@@ -13,18 +13,18 @@ const FilterScreen = ({ setShowFilter }) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headingFilterMenu}>FILTER RECIPE</Text>
-        <TouchableOpacity onPress={() => setShowFilter(false)} style={styles.closeButton}>
-          <Icon name="times" size={25} />
+        <TouchableOpacity
+          onPress={() => setShowFilter(false)}
+          style={styles.closeButton}
+        >
+          <Icon name="times" size={25} color={'white'} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.optionContainer}>
         <TouchableOpacity
           onPress={() => handleOptionPress("Förrätter")}
-          style={[
-            styles.optionButton,
-            selectedOption === "Förrätter",
-          ]}
+          style={[styles.optionButton, selectedOption === "Förrätter"]}
         >
           {selectedOption === "Förrätter" ? (
             <View style={styles.circleSelected} />
@@ -36,10 +36,7 @@ const FilterScreen = ({ setShowFilter }) => {
 
         <TouchableOpacity
           onPress={() => handleOptionPress("Huvudrätt")}
-          style={[
-            styles.optionButton,
-            selectedOption === "Huvudrätt",
-          ]}
+          style={[styles.optionButton, selectedOption === "Huvudrätt"]}
         >
           {selectedOption === "Huvudrätt" ? (
             <View style={styles.circleSelected} />
@@ -51,10 +48,7 @@ const FilterScreen = ({ setShowFilter }) => {
 
         <TouchableOpacity
           onPress={() => handleOptionPress("Dessert")}
-          style={[
-            styles.optionButton,
-            selectedOption === "Dessert",
-          ]}
+          style={[styles.optionButton, selectedOption === "Dessert"]}
         >
           {selectedOption === "Dessert" ? (
             <View style={styles.circleSelected} />
@@ -64,6 +58,11 @@ const FilterScreen = ({ setShowFilter }) => {
           <Text style={styles.optionText}>DESSERT</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>FILTERA</Text>
+          </TouchableOpacity>
+        </View>
     </View>
   );
 };
@@ -71,7 +70,7 @@ const FilterScreen = ({ setShowFilter }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "lightgreen",
+    backgroundColor: "#93bf85",
   },
   headerContainer: {
     flexDirection: "row",
@@ -81,8 +80,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   headingFilterMenu: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "900",
+    color: 'white',
+    letterSpacing: 2,
+
+    
   },
   closeButton: {},
   optionContainer: {
@@ -103,21 +106,47 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "white",
     marginRight: 10,
   },
   circleSelected: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: "black",
+    backgroundColor: "white",
     marginRight: 10,
   },
   optionText: {
     marginLeft: 10,
     fontSize: 16,
     fontWeight: "600",
+    color: 'white',
+
   },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    marginBottom: 30,
+
+  },
+  button: {
+    borderStyle: 'solid',
+   backgroundColor: 'white',
+    alignItems: "center",
+    justifyContent: "center",
+    width: "80%",
+    height: 40,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  
 });
 
 export default FilterScreen;
