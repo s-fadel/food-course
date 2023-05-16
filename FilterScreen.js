@@ -1,14 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const FilterScreen = ({ setShowFilter }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setShowFilter(false)} style={styles.closeButton}>
-        <Icon name="times" size={25} />
-      </TouchableOpacity>
-      <Text style={styles.text}>This is the Filter Screen</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headingFilterMenu}>FILTER RECIPE</Text>
+        <TouchableOpacity
+          onPress={() => setShowFilter(false)}
+          style={styles.closeButton}
+        >
+          <Icon name="times" size={25} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -16,19 +21,20 @@ const FilterScreen = ({ setShowFilter }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'lightgreen'
+    backgroundColor: "lightgreen",
   },
-  text: {
-    fontSize: 20,
-    fontWeight: 'medium',
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 70,
+    paddingHorizontal: 30,
   },
-  closeButton: {
-    position: 'absolute',
-    top: 70,
-    right: 35,
+  headingFilterMenu: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
+  closeButton: {},
 });
 
 export default FilterScreen;

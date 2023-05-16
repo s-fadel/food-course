@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import FilterScreen from './FilterScreen';
 
 const RecipeCard = ({ title, image }) => {
@@ -16,6 +16,8 @@ const HomeScreen = () => {
   const recipes = [
     { id: 1, title: 'Recept 1', image: require('./assets/images/recipe1.jpg') },
     { id: 2, title: 'Recept 2', image: require('./assets/images/recipe2.jpg') },
+    { id: 3, title: 'Recept 3', image: require('./assets/images/recipe1.jpg') },
+
   ];
 
   const handleFilterPress = () => {
@@ -28,6 +30,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
       <View style={styles.menu}>
         <Text style={styles.headingMenu}>FOOD COURSE</Text>
         <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
@@ -39,6 +42,7 @@ const HomeScreen = () => {
           <RecipeCard key={recipe.id} title={recipe.title} image={recipe.image} />
         ))}
       </View>
+      </ScrollView>
     </View>
   );
 };
@@ -48,6 +52,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  scrollContent: {
+    flexGrow: 1,
+    padding: 16,
+  },
   menu: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -56,7 +64,6 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     backgroundColor: 'lightgreen',
-
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
