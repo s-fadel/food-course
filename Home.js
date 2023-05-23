@@ -3,18 +3,18 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'rea
 import FilterScreen from './FilterScreen';
 import AboutCourses from './AboutCourses';
 
-const RecipeCard = ({ id, title, image, onPress }) => {
+const RecipeCard = ({ title, image, onPress }) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={() => onPress(id)}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
 };
-
 const HomeScreen = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+
 
   const recipes = [
     { id: 1, title: 'Recept 1', image: require('./assets/images/recipe1.jpg') },
@@ -26,9 +26,8 @@ const HomeScreen = () => {
     setShowFilter(true);
   };
 
-  const handleRecipePress = (recipeId) => {
-    const selectedRecipe = recipes.find(recipe => recipe.id === recipeId);
-    setSelectedRecipe(selectedRecipe);
+  const handleRecipePress = (recipe) => {
+    setSelectedRecipe(recipe);
   };
 
   if (showFilter) {
@@ -47,8 +46,9 @@ const HomeScreen = () => {
           <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
             <Text style={styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
+          
         </View>
-        <View style={styles.headerImageContainer}>
+         <View style={styles.headerImageContainer}>
           <Image
             source={require('./assets/images/recipe1.jpg')}
             style={styles.headerImage}
@@ -62,10 +62,9 @@ const HomeScreen = () => {
           {recipes.map(recipe => (
             <RecipeCard
               key={recipe.id}
-              id={recipe.id}
               title={recipe.title}
               image={recipe.image}
-              onPress={handleRecipePress}
+              onPress={() => handleRecipePress(recipe)}
             />
           ))}
         </View>
