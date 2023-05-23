@@ -1,14 +1,21 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
-import Home from './Home';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './Home';
+import AboutCourses from './AboutCourses';
+import FilterScreen from './FilterScreen';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-    <View style={styles.container}>
-      <Home />
-    </View>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="AboutCourses" component={AboutCourses} />
+        <Stack.Screen name="FilterScreen" component={FilterScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import FilterScreen from './FilterScreen';
-import AboutCourses from './AboutCourses';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import FilterScreen from "./FilterScreen";
+import AboutCourses from "./AboutCourses";
 
 const RecipeCard = ({ title, image, onPress }) => {
   return (
@@ -11,15 +19,16 @@ const RecipeCard = ({ title, image, onPress }) => {
     </TouchableOpacity>
   );
 };
-const HomeScreen = () => {
+
+const Stack = createStackNavigator();
+const HomeScreen = ({ navigation }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-
   const recipes = [
-    { id: 1, title: 'Recept 1', image: require('./assets/images/recipe1.jpg') },
-    { id: 2, title: 'Recept 2', image: require('./assets/images/recipe2.jpg') },
-    { id: 3, title: 'Recept 3', image: require('./assets/images/recipe1.jpg') },
+    { id: 1, title: "Recept 1", image: require("./assets/images/recipe1.jpg") },
+    { id: 2, title: "Recept 2", image: require("./assets/images/recipe2.jpg") },
+    { id: 3, title: "Recept 3", image: require("./assets/images/recipe1.jpg") },
   ];
 
   const handleFilterPress = () => {
@@ -27,7 +36,7 @@ const HomeScreen = () => {
   };
 
   const handleRecipePress = (recipe) => {
-    setSelectedRecipe(recipe);
+    navigation.navigate("AboutCourses", { recipe });
   };
 
   if (showFilter) {
@@ -35,7 +44,12 @@ const HomeScreen = () => {
   }
 
   if (selectedRecipe) {
-    return <AboutCourses recipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe} />;
+    return (
+      <AboutCourses
+        recipe={selectedRecipe}
+        setSelectedRecipe={setSelectedRecipe}
+      />
+    );
   }
 
   return (
@@ -43,14 +57,16 @@ const HomeScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.headerContainer}>
           <Text style={styles.headingMenu}>FOOD COURSE</Text>
-          <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
+          <TouchableOpacity
+            onPress={handleFilterPress}
+            style={styles.filterButton}
+          >
             <Text style={styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
-          
         </View>
-         <View style={styles.headerImageContainer}>
+        <View style={styles.headerImageContainer}>
           <Image
-            source={require('./assets/images/recipe1.jpg')}
+            source={require("./assets/images/recipe1.jpg")}
             style={styles.headerImage}
             resizeMode="cover"
           />
@@ -59,7 +75,7 @@ const HomeScreen = () => {
           </View>
         </View>
         <View style={styles.cardContainer}>
-          {recipes.map(recipe => (
+          {recipes.map((recipe) => (
             <RecipeCard
               key={recipe.id}
               title={recipe.title}
@@ -76,73 +92,71 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   scrollContent: {
     flexGrow: 1,
     padding: 16,
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
-    marginTop: 40,
-    marginBottom: 20,
   },
   filterButton: {
-    backgroundColor: '#93bf85',
+    backgroundColor: "#93bf85",
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
   filterButtonText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
   headingMenu: {
     flex: 1,
     fontSize: 20,
-    fontWeight: '900',
-    color: '#000000',
+    fontWeight: "900",
+    color: "#000000",
     letterSpacing: 2,
   },
   headerImageContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   headerImage: {
-    width: '100%',
+    width: "100%",
     height: 200,
   },
   imageOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   headerText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color:'white',
+    fontWeight: "bold",
+    color: "white",
   },
   cardContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 10,
   },
   card: {
-    width: '100%',
-    backgroundColor: 'white',
+    width: "100%",
+    backgroundColor: "white",
     borderRadius: 10,
     paddingBottom: 10,
     marginBottom: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -154,14 +168,14 @@ const styles = StyleSheet.create({
   image: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    width: '100%',
+    width: "100%",
     height: 170,
     marginBottom: 15,
   },
   title: {
     padding: 10,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
