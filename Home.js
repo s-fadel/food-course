@@ -22,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
   const recipes = [
     {
       id: 1,
-      image: require("./assets/images/recipe1.jpg"),
+      image: require("./assets/images/recipe2.jpg"),
       videoUrl: ('https://www.youtube.com/embed/CltUZnoUDFM?start=15&autoplay=0'),
       title: "Klassiska kokosbollar",
       category: "Förrätter",
@@ -49,8 +49,8 @@ const HomeScreen = ({ navigation }) => {
     },
     {
       id: 3,
-      image: require("./assets/images/recipe1.jpg"),
-      videoUrl: ('https://www.youtube.com/watch?v=CltUZnoUDFM&t=15s'),
+      image: require("./assets/images/recipe2.jpg"),
+      videoUrl: ('https://www.youtube.com/embed/CltUZnoUDFM?start=15&autoplay=0'),
       title: "Recept 3",
       category: "Dessert",
       description: "Detaljer för kort 3",

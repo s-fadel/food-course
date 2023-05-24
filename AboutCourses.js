@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
   ScrollView,
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
