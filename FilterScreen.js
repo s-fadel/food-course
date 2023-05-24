@@ -1,68 +1,88 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-const FilterScreen = ({ setShowFilter }) => {
+const FilterScreen = ({ setShowFilter, onSelectCategory, navigation }) => {
+  const Stack = createStackNavigator()
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const handleOptionPress = (option) => {
     setSelectedOption(option);
   };
 
+  const handleFilterPress = () => {
+    if (selectedOption) {
+      onSelectCategory(selectedOption);
+      setShowFilter(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headingFilterMenu}>FILTER RECIPE</Text>
-        <TouchableOpacity
-          onPress={() => setShowFilter(false)}
-          style={styles.closeButton}
-        >
-          <Icon name="times" size={25} color={'white'} />
-        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setShowFilter(false)} style={styles.closeButton}>
+        <Icon name="close" size={25} color={"white"} />
+      </TouchableOpacity>
       </View>
 
       <View style={styles.optionContainer}>
         <TouchableOpacity
           onPress={() => handleOptionPress("Förrätter")}
-          style={[styles.optionButton, selectedOption === "Förrätter"]}
+          style={[
+            styles.optionButton,
+            selectedOption === "Förrätter" && styles.selectedOption,
+          ]}
         >
           {selectedOption === "Förrätter" ? (
-            <View style={styles.circleSelected} />
+            <Icon name="check-circle" size={25} color={"white"} />
           ) : (
-            <View style={styles.circle} />
+            <Icon name="radio-button-unchecked" size={25} color={"white"} />
           )}
           <Text style={styles.optionText}>FÖRRÄTTER</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => handleOptionPress("Huvudrätt")}
-          style={[styles.optionButton, selectedOption === "Huvudrätt"]}
+          style={[
+            styles.optionButton,
+            selectedOption === "Huvudrätt" && styles.selectedOption,
+          ]}
         >
           {selectedOption === "Huvudrätt" ? (
-            <View style={styles.circleSelected} />
+            <Icon name="check-circle" size={25} color={"white"} />
           ) : (
-            <View style={styles.circle} />
+            <Icon name="radio-button-unchecked" size={25} color={"white"} />
           )}
-          <Text style={styles.optionText}>HUVUDRÄTTER</Text>
+          <Text style={styles.optionText}>HUVUDRÄTT</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => handleOptionPress("Dessert")}
-          style={[styles.optionButton, selectedOption === "Dessert"]}
+          style={[
+            styles.optionButton,
+            selectedOption === "Dessert" && styles.selectedOption,
+          ]}
         >
           {selectedOption === "Dessert" ? (
-            <View style={styles.circleSelected} />
+            <Icon name="check-circle" size={25} color={"white"} />
           ) : (
-            <View style={styles.circle} />
+            <Icon name="radio-button-unchecked" size={25} color={"white"} />
           )}
           <Text style={styles.optionText}>DESSERT</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>FILTERA</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={[styles.button, !selectedOption && styles.disabledButton]}
+          onPress={handleFilterPress}
+          disabled={!selectedOption}
+        >
+          <Text style={styles.buttonText}>FILTERA</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -76,16 +96,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 70,
+    paddingTop: 40,
     paddingHorizontal: 30,
   },
   headingFilterMenu: {
     fontSize: 20,
     fontWeight: "900",
-    color: 'white',
+    color: "white",
     letterSpacing: 2,
-
-    
   },
   closeButton: {},
   optionContainer: {
@@ -96,7 +114,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    marginTop: 30,
   },
   selectedOption: {
     marginTop: 10,
@@ -120,21 +137,19 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     fontWeight: "600",
-    color: 'white',
-
+    color: "white",
   },
   buttonContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 10,
     left: 0,
     right: 0,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 30,
-
   },
   button: {
-    borderStyle: 'solid',
-   backgroundColor: 'white',
+    borderStyle: "solid",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
     width: "80%",
@@ -146,7 +161,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  
+  disabledButton: {
+    opacity: 0.5,
+  },
 });
 
 export default FilterScreen;

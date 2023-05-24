@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterScreen from "./FilterScreen";
 import AboutCourses from "./AboutCourses";
@@ -24,23 +17,40 @@ const Stack = createStackNavigator();
 const HomeScreen = ({ navigation }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const recipes = [
-    { id: 1, title: "Recept 1", image: require("./assets/images/recipe1.jpg") },
-    { id: 2, title: "Recept 2", image: require("./assets/images/recipe2.jpg") },
-    { id: 3, title: "Recept 3", image: require("./assets/images/recipe1.jpg") },
+    { id: 1, title: "Recept 1", image: require("./assets/images/recipe1.jpg"), category: "Förrätter" },
+    { id: 2, title: "Recept 2", image: require("./assets/images/recipe2.jpg"), category: "Huvudrätt" },
+    { id: 3, title: "Recept 3", image: require("./assets/images/recipe1.jpg"), category: "Dessert" },
   ];
+
 
   const handleFilterPress = () => {
     setShowFilter(true);
   };
-
+  
   const handleRecipePress = (recipe) => {
     navigation.navigate("AboutCourses", { recipe });
   };
+  
+  const handleClearFilter = () => {
+    setSelectedCategory(null);
+  };
+ 
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setShowFilter(false);
+  };
 
   if (showFilter) {
-    return <FilterScreen setShowFilter={setShowFilter} />;
+    return (
+        <FilterScreen
+        setShowFilter={setShowFilter}
+        onSelectCategory={handleCategorySelect}
+        navigation={HomeScreen} 
+      />
+    );
   }
 
   if (selectedRecipe) {
@@ -52,18 +62,26 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
+  let filteredRecipes = recipes;
+  if (selectedCategory) {
+    filteredRecipes = recipes.filter((recipe) => recipe.category === selectedCategory);
+  }
+
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headingMenu}>FOOD COURSE</Text>
-          <TouchableOpacity
-            onPress={handleFilterPress}
-            style={styles.filterButton}
-          >
-            <Text style={styles.filterButtonText}>FILTER</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headingMenu}>FOOD COURSE</Text>
+        <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
+          <Text style={styles.filterButtonText}>FILTER</Text>
+        </TouchableOpacity>
+        {selectedCategory && (
+          <TouchableOpacity onPress={handleClearFilter} style={styles.filterButton}>
+            <Text style={styles.filterButtonText}>RENSA FILTER</Text>
           </TouchableOpacity>
-        </View>
+        )}
+      </View>
         <View style={styles.headerImageContainer}>
           <Image
             source={require("./assets/images/recipe1.jpg")}
@@ -75,7 +93,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.cardContainer}>
-          {recipes.map((recipe) => (
+          {filteredRecipes.map((recipe) => (
             <RecipeCard
               key={recipe.id}
               title={recipe.title}
@@ -88,7 +106,6 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
