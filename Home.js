@@ -106,14 +106,14 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
       <View style={styles.headerContainer}>
         <Text style={styles.headingMenu}>FOOD COURSE</Text>
-        <TouchableOpacity onPress={handleFilterPress} style={styles.filterButton}>
-          <Text style={styles.filterButtonText}>FILTER</Text>
-        </TouchableOpacity>
         {selectedCategory && (
-          <TouchableOpacity onPress={handleClearFilter} style={styles.filterButton}>
-            <Text style={styles.filterButtonText}>RENSA FILTER</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={handleClearFilter} style={styles.filterResetButton}>
+          <Text style={styles.filterResetButtonText}>RENSA FILTER</Text>
+        </TouchableOpacity>
         )}
+          <TouchableOpacity  onPress={handleFilterPress} style={styles.filterButton}>
+            <Text style={styles.filterButtonText}>Filter</Text> 
+          </TouchableOpacity>
       </View>
         <View style={styles.headerImageContainer}>
           <Image
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    padding: 16,
+    padding: 10,
   },
   headerContainer: {
     flexDirection: "row",
@@ -155,21 +155,34 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     backgroundColor: "#93bf85",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 15,
     borderRadius: 5,
   },
   filterButtonText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "medium",
     color: "white",
+  },
+  filterResetButton: {
+    borderColor: "black",
+    backgroundColor: "lightgrey",
+    marginRight: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  filterResetButtonText: {
+    fontSize: 12,
+    fontWeight: "light",
+    color: "black",
   },
   headingMenu: {
     flex: 1,
     fontSize: 20,
     fontWeight: "900",
     color: "#000000",
-    letterSpacing: 2,
+    letterSpacing: 1,
   },
   headerImageContainer: {
     alignItems: "center",
