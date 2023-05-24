@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/FontAwesome";
-import FilterScreen from './FilterScreen';
-
+import { WebView } from "react-native-webview";
 
 const AboutCourses = ({ navigation, route }) => {
-  const { recipe } = route.params;
+  const { recipe, recipes } = route.params;
   const [isSectionExpanded, setIsSectionExpanded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-
   const handleBackButton = () => {
-    navigation.goBack(); 
+    navigation.goBack();
   };
 
   const handleSectionToggle = () => {
@@ -23,48 +28,13 @@ const AboutCourses = ({ navigation, route }) => {
     setSelectedCategory(category);
   };
 
-
-  const recipes = [
-    {
-      id: 1,
-      title: "Klassiska kokosbollar",
-      category: "Förrätter",
-      description:
-        "Försvinnande god klassiker. Lite starkt kaffe i smeten gör dem mer vuxna!",
-      details: [
-        "✓ Pasta med köttfärsås",
-        "✓ Grekisk sallad",
-        "✓ Carbonara",
-        "✓ Tacos",
-      ],
-      aboutText:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      id: 2,
-      title: "Recept 2",
-      category: "Huvudrätt",
-      description: "Detaljer för kort 2",
-      details: ["Detalj 1", "Detalj 2"],
-      aboutText: "Denna text beskriver recept 2.",
-    },
-    {
-      id: 3,
-      title: "Recept 3",
-      category: "Dessert",
-      description: "Detaljer för kort 3",
-      details: ["Detalj 1", "Detalj 2", "Detalj 3"],
-      aboutText: "Detta är information om recept 3.",
-    },
-  ];
-
   const selectedRecipe = recipes.find((r) => r.id === recipe.id);
 
   if (!selectedRecipe) {
-    return null; // Handle invalid recipe ID
+    return null;
   }
 
-  const { title, description, details, aboutText, category } = selectedRecipe;
+  const { title, description, details, aboutText, category, videoUrl } = selectedRecipe;
 
   return (
     <View style={styles.container}>
@@ -77,7 +47,12 @@ const AboutCourses = ({ navigation, route }) => {
             <Text style={styles.backButtonText}>Tillbaka</Text>
           </TouchableOpacity>
 
-          <Image source={recipe.image} style={styles.image} />
+          <WebView
+            source={{
+              uri: videoUrl,
+            }}
+            style={styles.youtubeLink} 
+          />
 
           <View style={styles.card}>
             <Text style={styles.heading}>{title}</Text>
@@ -193,6 +168,10 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     padding: 16,
+  },
+  youtubeLink: {
+    height: 200,
+    width: "100%",
   },
 });
 

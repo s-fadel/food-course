@@ -20,18 +20,51 @@ const HomeScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const recipes = [
-    { id: 1, title: "Recept 1", image: require("./assets/images/recipe1.jpg"), category: "Förrätter" },
-    { id: 2, title: "Recept 2", image: require("./assets/images/recipe2.jpg"), category: "Huvudrätt" },
-    { id: 3, title: "Recept 3", image: require("./assets/images/recipe1.jpg"), category: "Dessert" },
+    {
+      id: 1,
+      image: require("./assets/images/recipe1.jpg"),
+      videoUrl: ('https://www.youtube.com/embed/CltUZnoUDFM?start=15&autoplay=0'),
+      title: "Klassiska kokosbollar",
+      category: "Förrätter",
+      description:
+        "Försvinnande god klassiker. Lite starkt kaffe i smeten gör dem mer vuxna!",
+      details: [
+        "✓ Pasta med köttfärsås",
+        "✓ Grekisk sallad",
+        "✓ Carbonara",
+        "✓ Tacos",
+      ],
+      aboutText:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      id: 2,
+      image: require("./assets/images/recipe1.jpg"),
+      videoUrl: ('https://www.youtube.com/embed/TOYYHImHNNk?start=15&autoplay=0'),
+      title: "Recept 2",
+      category: "Huvudrätt",
+      description: "Detaljer för kort 2",
+      details: ["Detalj 1", "Detalj 2"],
+      aboutText: "Denna text beskriver recept 2.",
+    },
+    {
+      id: 3,
+      image: require("./assets/images/recipe1.jpg"),
+      videoUrl: ('https://www.youtube.com/watch?v=CltUZnoUDFM&t=15s'),
+      title: "Recept 3",
+      category: "Dessert",
+      description: "Detaljer för kort 3",
+      details: ["Detalj 1", "Detalj 2", "Detalj 3"],
+      aboutText: "Detta är information om recept 3.",
+    },
   ];
-
 
   const handleFilterPress = () => {
     setShowFilter(true);
   };
   
   const handleRecipePress = (recipe) => {
-    navigation.navigate("AboutCourses", { recipe });
+    navigation.navigate("AboutCourses", { recipe, recipes });
   };
   
   const handleClearFilter = () => {
