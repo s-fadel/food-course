@@ -19,6 +19,10 @@ const AboutCourses = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  const fram = () => {
+    navigation.navigate("VideoCourses");
+  };
+
   const handleSectionToggle = () => {
     setIsSectionExpanded(!isSectionExpanded);
   };
@@ -81,6 +85,10 @@ const AboutCourses = ({ navigation, route }) => {
                 <Text style={styles.aboutText}>{aboutText}</Text>
               </View>
             )}
+           <TouchableOpacity
+            onPress={fram}>
+                <Text>hej</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </ScrollView>
