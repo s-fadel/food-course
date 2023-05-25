@@ -5,46 +5,42 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  PanResponder,
 } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { WebView } from "react-native-webview";
 
 const AboutCourses = ({ navigation, route }) => {
   const { recipe, recipes } = route.params;
   const [isSectionExpanded, setIsSectionExpanded] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const handleBackButton = () => {
-    navigation.goBack();
-  };
-
-  const fram = () => {
-    navigation.navigate("VideoCourses");
-  };
 
   const handleSectionToggle = () => {
     setIsSectionExpanded(!isSectionExpanded);
   };
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-  };
+  const { title, description, details, aboutText, videoUrl } = recipe;
 
-  const selectedRecipe = recipes.find((r) => r.id === recipe.id);
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (evt, gestureState) => {
+      if (gestureState.dx < -100) {
+        navigation.navigate("VideoCourses", { recipe, recipes });
+      }
+    },
+  });
 
-  if (!selectedRecipe) {
+  if (!recipe) {
     return null;
   }
 
-  const { title, description, details, aboutText, category, videoUrl } = selectedRecipe;
-
   return (
-    <View style={styles.container}>
+    <View style={styles.container} {...panResponder.panHandlers}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View>
           <TouchableOpacity
-            onPress={handleBackButton}
+            onPress={() => {
+              navigation.goBack();
+            }}
             style={styles.backButton}
           >
             <Text style={styles.backButtonText}>Tillbaka</Text>
@@ -54,7 +50,7 @@ const AboutCourses = ({ navigation, route }) => {
             source={{
               uri: videoUrl,
             }}
-            style={styles.youtubeLink} 
+            style={styles.youtubeLink}
           />
 
           <View style={styles.card}>
@@ -85,10 +81,6 @@ const AboutCourses = ({ navigation, route }) => {
                 <Text style={styles.aboutText}>{aboutText}</Text>
               </View>
             )}
-           <TouchableOpacity
-            onPress={fram}>
-                <Text>hej</Text>
-            </TouchableOpacity>
           </ScrollView>
         </View>
       </ScrollView>
@@ -179,6 +171,21 @@ const styles = StyleSheet.create({
   youtubeLink: {
     height: 200,
     width: "100%",
+  },
+  rightActionsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "flex-end",
+  },
+  rightAction: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  rightActionText: {
+    color: "white",
+    fontSize: 16,
   },
 });
 

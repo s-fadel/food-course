@@ -8,6 +8,12 @@ const FilterScreen = ({ setShowFilter, onSelectCategory, navigation }) => {
   const Stack = createStackNavigator()
   const [selectedOption, setSelectedOption] = React.useState(null);
 
+  const options = [
+    { value: "Förrätter", label: "FÖRRÄTTER" },
+    { value: "Huvudrätt", label: "HUVUDRÄTT" },
+    { value: "Dessert", label: "DESSERT" },
+  ];
+
   const handleOptionPress = (option) => {
     setSelectedOption(option);
   };
@@ -24,56 +30,30 @@ const FilterScreen = ({ setShowFilter, onSelectCategory, navigation }) => {
       <View style={styles.headerContainer}>
         <Text style={styles.headingFilterMenu}>FILTER RECIPE</Text>
         <TouchableOpacity onPress={() => setShowFilter(false)} style={styles.closeButton}>
-        <Icon name="close" size={25} color={"white"} />
-      </TouchableOpacity>
+          <Icon name="close" size={25} color={"white"} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.optionContainer}>
-        <TouchableOpacity
-          onPress={() => handleOptionPress("Förrätter")}
-          style={[
-            styles.optionButton,
-            selectedOption === "Förrätter" && styles.selectedOption,
-          ]}
-        >
-          {selectedOption === "Förrätter" ? (
-            <Icon name="check-circle" size={25} color={"white"} />
-          ) : (
-            <Icon name="radio-button-unchecked" size={25} color={"white"} />
-          )}
-          <Text style={styles.optionText}>FÖRRÄTTER</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleOptionPress("Huvudrätt")}
-          style={[
-            styles.optionButton,
-            selectedOption === "Huvudrätt" && styles.selectedOption,
-          ]}
-        >
-          {selectedOption === "Huvudrätt" ? (
-            <Icon name="check-circle" size={25} color={"white"} />
-          ) : (
-            <Icon name="radio-button-unchecked" size={25} color={"white"} />
-          )}
-          <Text style={styles.optionText}>HUVUDRÄTT</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleOptionPress("Dessert")}
-          style={[
-            styles.optionButton,
-            selectedOption === "Dessert" && styles.selectedOption,
-          ]}
-        >
-          {selectedOption === "Dessert" ? (
-            <Icon name="check-circle" size={25} color={"white"} />
-          ) : (
-            <Icon name="radio-button-unchecked" size={25} color={"white"} />
-          )}
-          <Text style={styles.optionText}>DESSERT</Text>
-        </TouchableOpacity>
+        {options.map((option) => (
+          <TouchableOpacity
+            key={option.value}
+            onPress={() => handleOptionPress(option.value)}
+            style={[
+              styles.optionButton,
+              selectedOption === option.value && styles.selectedOption,
+            ]}
+          >
+            {selectedOption === option.value ? (
+              <Icon name="check-circle" size={25} color={"white"} />
+            ) : (
+              <Icon name="radio-button-unchecked" size={25} color={"white"} />
+            )}
+            <Text style={styles.optionText}>{option.label}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, !selectedOption && styles.disabledButton]}
