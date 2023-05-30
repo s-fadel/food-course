@@ -17,9 +17,27 @@ export const recipes = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
     videoCourses: [
-      { courseTitle: "Kött", courseContent: "Kött beskrivning", courseId: 1 },
-      { courseTitle: "Fisk", courseContent: "Fisk beskrivning",  courseId: 2 },
-      { courseTitle: "Korv", courseContent: "Korv beskrivning",  courseId: 3 },
+      {
+        courseTitle: "Kött",
+        courseContent: "Kött beskrivning",
+        courseId: 1,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
+      {
+        courseTitle: "Fisk",
+        courseContent: "Fisk beskrivning",
+        courseId: 2,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
+      {
+        courseTitle: "Korv",
+        courseContent: "Korv beskrivning",
+        courseId: 3,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
     ],
   },
   {
@@ -32,9 +50,27 @@ export const recipes = [
     details: ["Detalj 1", "Detalj 2"],
     aboutText: "Denna text beskriver recept 2.",
     videoCourses: [
-      { courseTitle: "Grönsaker", courseContent: "Grönsaker beskrivning", courseId: 1 },
-      { courseTitle: "Vegan", courseContent: "Vegan beskrivning", courseId: 2 },
-      { courseTitle: "Dessert", courseContent: "Dessert beskrivning", courseId: 3 },
+      {
+        courseTitle: "Grönsaker",
+        courseContent: "Grönsaker beskrivning",
+        courseId: 1,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
+      {
+        courseTitle: "Vegan",
+        courseContent: "Vegan beskrivning",
+        courseId: 2,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
+      {
+        courseTitle: "Dessert",
+        courseContent: "Dessert beskrivning",
+        courseId: 3,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
     ],
   },
   {
@@ -47,9 +83,27 @@ export const recipes = [
     details: ["Detalj 1", "Detalj 2", "Detalj 3"],
     aboutText: "Detta är information om recept 3.",
     videoCourses: [
-      { courseTitle: "Fika", courseContent: "Fika beskrivning",  courseId: 1 },
-      { courseTitle: "Soppa", courseContent: "Soppa beskrivning",  courseId: 2 },
-      { courseTitle: "Kyckling", courseContent: "Kyckling beskrivning",  courseId: 3 },
+      {
+        courseTitle: "Fika",
+        courseContent: "Fika beskrivning",
+        courseId: 1,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
+      {
+        courseTitle: "Soppa",
+        courseContent: "Soppa beskrivning",
+        courseId: 2,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
+      {
+        courseTitle: "Kyckling",
+        courseContent: "Kyckling beskrivning",
+        courseId: 3,
+        courseTurtorialUrl:
+          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+      },
     ],
   },
 ];

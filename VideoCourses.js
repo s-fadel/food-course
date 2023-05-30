@@ -1,12 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
+import { WebView } from "react-native-webview";
 
 const VideoCourses = ({ route }) => {
   const { recipes, recipe } = route.params;
   const [expandedCard, setExpandedCard] = useState(null);
+  const [longPressActivated, setLongPressActivated] = useState(undefined);
+  const [selectedVideo, setSelectedVideo] = useState(undefined);
 
   const LockIcon = () => (
     <Feather name="lock" size={22} color="black" style={styles.lockIcon} />
@@ -26,26 +28,44 @@ const VideoCourses = ({ route }) => {
     }
 
     return recipe.videoCourses.map((videoCourse) => (
-        <Pressable
-          key={videoCourse.courseTitle} // Lägg till en unik nyckel för varje kurs
-          style={({ pressed }) => [
-            styles.card,
-            { opacity: pressed ? 0.5 : 1 } // Ändra utseendet när den är tryckt
-          ]}
-          onPress={() => handleCardPress(videoCourse.courseId)}
-        >
-          <LockIcon />
-          <Text style={styles.cardTitle}>{videoCourse.courseTitle}</Text>
-          {expandedCard === videoCourse.courseId && (
-            <Text style={styles.cardDescription}>{videoCourse.courseContent}</Text>
-          )}
-        </Pressable>
-      ));
+      <Pressable
+        key={videoCourse.courseTitle} // Lägg till en unik nyckel för varje kurs
+        style={({ pressed }) => [
+          styles.card,
+          { opacity: pressed ? 0.5 : 1 }, // Ändra utseendet när den är tryckt
+        ]}
+        onPress={() => {
+          handleCardPress(videoCourse.courseId);
+          setLongPressActivated(false);
+          setSelectedVideo(null);
+        }}
+        onLongPress={() => {
+          setLongPressActivated(true);
+          setSelectedVideo(videoCourse.courseId);
+        }}
+      >
+        <LockIcon />
+        <Text style={styles.cardTitle}>{videoCourse.courseTitle}</Text>
+        {expandedCard === videoCourse.courseId && (
+          <Text style={styles.cardDescription}>
+            {videoCourse.courseContent}
+          </Text>
+        )}
+        {longPressActivated && videoCourse.courseId === selectedVideo ? (
+          <View>
+            <WebView
+              source={{ uri: videoCourse.courseTurtorialUrl }}
+              style={styles.youtubeLink}
+            />
+          </View>
+        ) : null}
+      </Pressable>
+    ));
   };
 
   return (
     <View style={styles.container}>
-    <Text style={styles.heading}>Video Tutorial</Text>
+      <Text style={styles.heading}>Video Tutorial</Text>
       <View style={styles.cardContainer}>{pressableCourseContent()}</View>
     </View>
   );
@@ -94,6 +114,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 7,
+  },
+  youtubeLink: {
+    marginTop: 16,
+    height: 200,
+    width: "100%",
+  },
+  cardDescription: {
+    margin: 10,
+    padding: 5,
+    color: 'blue',
   },
 });
 
