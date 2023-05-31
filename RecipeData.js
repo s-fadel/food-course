@@ -21,21 +21,21 @@ export const recipes = [
         courseTitle: "Kött",
         courseContent: "Kött beskrivning",
         courseId: 1,
-        courseTurtorialUrl:
-          "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
+        courseTutorialUrl:
+          "https://www.youtube.com/watch?v=HWbIwXK74FU&app=youtube",
       },
       {
         courseTitle: "Fisk",
         courseContent: "Fisk beskrivning",
         courseId: 2,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
       {
         courseTitle: "Korv",
         courseContent: "Korv beskrivning",
         courseId: 3,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
     ],
@@ -54,21 +54,21 @@ export const recipes = [
         courseTitle: "Grönsaker",
         courseContent: "Grönsaker beskrivning",
         courseId: 1,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
       {
         courseTitle: "Vegan",
         courseContent: "Vegan beskrivning",
         courseId: 2,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
       {
         courseTitle: "Dessert",
         courseContent: "Dessert beskrivning",
         courseId: 3,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
     ],
@@ -87,21 +87,21 @@ export const recipes = [
         courseTitle: "Fika",
         courseContent: "Fika beskrivning",
         courseId: 1,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
       {
         courseTitle: "Soppa",
         courseContent: "Soppa beskrivning",
         courseId: 2,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
       {
         courseTitle: "Kyckling",
         courseContent: "Kyckling beskrivning",
         courseId: 3,
-        courseTurtorialUrl:
+        courseTutorialUrl:
           "https://www.youtube.com/watch?v=CltUZnoUDFM&app=youtube",
       },
     ],

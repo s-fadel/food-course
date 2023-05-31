@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
 import { WebView } from "react-native-webview";
+import { AntDesign } from "@expo/vector-icons";
 
 const VideoCourses = ({ route }) => {
   const { recipes, recipe } = route.params;
   const [expandedCard, setExpandedCard] = useState(null);
   const [longPressActivated, setLongPressActivated] = useState(undefined);
   const [selectedVideo, setSelectedVideo] = useState(undefined);
+  const [isVideoPlayed, setIsVideoPlayed] = useState(false);
+  const [isVideoWatched, setIsVideoWatched] = useState({});
+
+  useEffect(() => {
+    if (isVideoPlayed && selectedVideo) {
+      setTimeout(() => {
+        setIsVideoWatched((prevIsVideoWatched) => ({
+          ...prevIsVideoWatched,
+          [selectedVideo]: true,
+        }));
+      }, 3000);
+    }
+  }, [isVideoPlayed, selectedVideo]);
 
   const LockIcon = () => (
-    <Feather name="lock" size={22} color="black" style={styles.lockIcon} />
+    <AntDesign name="lock" size={22} color="black" style={styles.lockIcon} />
+  );
+
+  const UnlockIcon = () => (
+    <AntDesign name="unlock" size={22} color="black" style={styles.lockIcon} />
   );
 
   const handleCardPress = (courseId) => {
@@ -27,40 +43,45 @@ const VideoCourses = ({ route }) => {
       return null;
     }
 
-    return recipe.videoCourses.map((videoCourse) => (
-      <Pressable
-        key={videoCourse.courseTitle} // Lägg till en unik nyckel för varje kurs
-        style={({ pressed }) => [
-          styles.card,
-          { opacity: pressed ? 0.5 : 1 }, // Ändra utseendet när den är tryckt
-        ]}
-        onPress={() => {
-          handleCardPress(videoCourse.courseId);
-          setLongPressActivated(false);
-          setSelectedVideo(null);
-        }}
-        onLongPress={() => {
-          setLongPressActivated(true);
-          setSelectedVideo(videoCourse.courseId);
-        }}
-      >
-        <LockIcon />
-        <Text style={styles.cardTitle}>{videoCourse.courseTitle}</Text>
-        {expandedCard === videoCourse.courseId && (
-          <Text style={styles.cardDescription}>
-            {videoCourse.courseContent}
-          </Text>
-        )}
-        {longPressActivated && videoCourse.courseId === selectedVideo ? (
-          <View>
-            <WebView
-              source={{ uri: videoCourse.courseTurtorialUrl }}
-              style={styles.youtubeLink}
-            />
-          </View>
-        ) : null}
-      </Pressable>
-    ));
+    return recipe.videoCourses.map((videoCourse) => {
+      const isWatched = isVideoWatched[videoCourse.courseId] || false;
+
+      return (
+        <Pressable
+          key={videoCourse.courseTitle} // Lägg till en unik nyckel för varje kurs
+          style={({ pressed }) => [
+            styles.card,
+            { opacity: pressed ? 0.5 : 1 }, // Ändra utseendet när den är tryckt
+          ]}
+          onPress={() => {
+            handleCardPress(videoCourse.courseId);
+            setLongPressActivated(false);
+            setSelectedVideo(null);
+          }}
+          onLongPress={() => {
+            setLongPressActivated(true);
+            setIsVideoPlayed(true);
+            setSelectedVideo(videoCourse.courseId);
+          }}
+        >
+          {isWatched ? <UnlockIcon /> : <LockIcon />}
+          <Text style={styles.cardTitle}>{videoCourse.courseTitle}</Text>
+          {expandedCard === videoCourse.courseId && (
+            <Text style={styles.cardDescription}>
+              {videoCourse.courseContent}
+            </Text>
+          )}
+          {longPressActivated && videoCourse.courseId === selectedVideo ? (
+            <View>
+              <WebView
+                source={{ uri: videoCourse.courseTutorialUrl }}
+                style={styles.youtubeLink}
+              />
+            </View>
+          ) : null}
+        </Pressable>
+      );
+    });
   };
 
   return (
@@ -123,7 +144,7 @@ const styles = StyleSheet.create({
   cardDescription: {
     margin: 10,
     padding: 5,
-    color: 'blue',
+    color: "blue",
   },
 });
 
