@@ -9,19 +9,17 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { WebView } from "react-native-webview";
+import { AntDesign } from "@expo/vector-icons";
 
 const AboutCourses = ({ navigation, route }) => {
   const { recipe, recipes } = route.params;
   const [isSectionExpanded, setIsSectionExpanded] = useState(false);
 
-  const handleSectionToggle = () => {
-    setIsSectionExpanded(!isSectionExpanded);
-  };
-
-  const { title, description, details, aboutText, videoUrl } = recipe;
-
   const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
+    onMoveShouldSetPanResponder: (evt, gestureState) => {
+      const { dx, dy } = gestureState;
+      return Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5;
+    },
     onPanResponderMove: (evt, gestureState) => {
       if (gestureState.dx < -100) {
         navigation.navigate("VideoCourses", { recipe, recipes });
@@ -29,18 +27,26 @@ const AboutCourses = ({ navigation, route }) => {
     },
   });
 
+  const handleBackButton = () => {
+    navigation.goBack();
+  };
+
+  const handleSectionToggle = () => {
+    setIsSectionExpanded(!isSectionExpanded);
+  };
+
   if (!recipe) {
     return null;
   }
+
+  const { title, description, details, aboutText, videoUrl } = recipe;
 
   return (
     <View style={styles.container} {...panResponder.panHandlers}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View>
           <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}
+            onPress={handleBackButton}
             style={styles.backButton}
           >
             <Text style={styles.backButtonText}>Tillbaka</Text>
@@ -53,13 +59,14 @@ const AboutCourses = ({ navigation, route }) => {
             style={styles.youtubeLink}
           />
 
-          <View style={styles.card}>
+          <View>
             <Text style={styles.heading}>{title}</Text>
             <Text style={styles.cardText}>{description}</Text>
             {details.map((item, index) => (
-              <Text key={index} style={styles.checkItem}>
-                {item}
-              </Text>
+              <View key={index} style={styles.checkItem}>
+                <AntDesign name="check" size={22} color="green" />
+                <Text style={styles.itemText}>{item}</Text>
+              </View>
             ))}
           </View>
         </View>
@@ -114,32 +121,21 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 20,
   },
-  card1: {
-    backgroundColor: "blue",
-    padding: 10,
-    paddingTop: 0,
-  },
-  card2: {
-    backgroundColor: "blue",
-    padding: 10,
-    paddingTop: 0,
-  },
-  card3: {
-    backgroundColor: "blue",
-    padding: 10,
-    paddingTop: 0,
-  },
   cardText: {
     color: "black",
     paddingBottom: 20,
     fontSize: 16,
   },
   checkItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 20,
-    marginBottom: 15,
+    paddingLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
     fontSize: 16,
+    marginBottom: 15,
+  },
+  itemText: {
+    marginLeft: 10,
   },
   aboutSection: {
     marginTop: 20,
@@ -171,21 +167,6 @@ const styles = StyleSheet.create({
   youtubeLink: {
     height: 200,
     width: "100%",
-  },
-  rightActionsContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
-  rightAction: {
-    backgroundColor: "red",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-  rightActionText: {
-    color: "white",
-    fontSize: 16,
   },
 });
 
