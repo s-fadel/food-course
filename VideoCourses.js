@@ -27,7 +27,7 @@ const VideoCourses = ({ route }) => {
   );
 
   const UnlockIcon = () => (
-    <AntDesign name="unlock" size={22} color="black" style={styles.lockIcon} />
+    <AntDesign name="unlock" size={22} color="green" style={styles.lockIcon} />
   );
 
   const handleCardPress = (courseId) => {

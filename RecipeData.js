@@ -8,10 +8,10 @@ export const recipes = [
     description:
       "Försvinnande god klassiker. Lite starkt kaffe i smeten gör dem mer vuxna!",
     details: [
-      "✓ Pasta med köttfärsås",
-      "✓ Grekisk sallad",
-      "✓ Carbonara",
-      "✓ Tacos",
+      "Pasta med köttfärsås",
+      "Grekisk sallad",
+      "Carbonara",
+      "Tacos",
     ],
     aboutText:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
