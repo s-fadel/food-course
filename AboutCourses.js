@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     marginLeft: 10,
+    marginRight: 5,
   },
   aboutSection: {
     marginTop: 20,
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
     height: 200,
     width: "100%",
   },
+  
 });
 
 export default AboutCourses;

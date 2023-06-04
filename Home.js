@@ -14,7 +14,6 @@ const RecipeCard = ({ title, image, onPress }) => {
   );
 };
 
-const Stack = createStackNavigator();
 const HomeScreen = ({ navigation }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -79,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
       </View>
         <View style={styles.headerImageContainer}>
           <Image
-            source={require("./assets/images/recipe1.jpg")}
+            source={require("./assets/images/food.jpg")}
             style={styles.headerImage}
             resizeMode="cover"
           />

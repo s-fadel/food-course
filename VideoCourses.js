@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { WebView } from "react-native-webview";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 const VideoCourses = ({ route }) => {
-  const { recipes, recipe } = route.params;
+  const { recipe } = route.params;
   const [expandedCard, setExpandedCard] = useState(null);
   const [longPressActivated, setLongPressActivated] = useState(undefined);
   const [selectedVideo, setSelectedVideo] = useState(undefined);
-  const [isVideoPlayed, setIsVideoPlayed] = useState(false);
   const [isVideoWatched, setIsVideoWatched] = useState({});
-
-  useEffect(() => {
-    if (isVideoPlayed && selectedVideo) {
-      setTimeout(() => {
-        setIsVideoWatched((prevIsVideoWatched) => ({
-          ...prevIsVideoWatched,
-          [selectedVideo]: true,
-        }));
-      }, 3000);
-    }
-  }, [isVideoPlayed, selectedVideo]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const LockIcon = () => (
     <AntDesign name="lock" size={22} color="black" style={styles.lockIcon} />
@@ -38,6 +27,15 @@ const VideoCourses = ({ route }) => {
     }
   };
 
+  const onStateChange = (state) => {
+    if (state === "ended") {
+      setIsVideoWatched((prevIsVideoWatched) => ({
+        ...prevIsVideoWatched,
+        [selectedVideo]: true,
+      }));
+    }
+  };
+
   const pressableCourseContent = () => {
     if (!recipe) {
       return null;
@@ -48,10 +46,10 @@ const VideoCourses = ({ route }) => {
 
       return (
         <Pressable
-          key={videoCourse.courseTitle} // Lägg till en unik nyckel för varje kurs
+          key={videoCourse.courseTitle} 
           style={({ pressed }) => [
             styles.card,
-            { opacity: pressed ? 0.5 : 1 }, // Ändra utseendet när den är tryckt
+            { opacity: pressed ? 0.5 : 1 }, 
           ]}
           onPress={() => {
             handleCardPress(videoCourse.courseId);
@@ -60,7 +58,7 @@ const VideoCourses = ({ route }) => {
           }}
           onLongPress={() => {
             setLongPressActivated(true);
-            setIsVideoPlayed(true);
+            setModalVisible(true);
             setSelectedVideo(videoCourse.courseId);
           }}
         >
@@ -72,12 +70,32 @@ const VideoCourses = ({ route }) => {
             </Text>
           )}
           {longPressActivated && videoCourse.courseId === selectedVideo ? (
-            <View>
-              <WebView
-                source={{ uri: videoCourse.courseTutorialUrl }}
-                style={styles.youtubeLink}
-              />
-            </View>
+            <Modal visible={modalVisible}>
+              <View style={{ marginTop: 50 }}>
+                <Pressable
+                  onPress={() => setModalVisible(false)}
+                  style={styles.closeButton}
+                >
+                 <AntDesign name="close" size={24} color="black" style={styles.closeButtonIcon}/>
+                </Pressable>
+              </View>
+              <View style={{ marginTop: 50 }}>
+                <YoutubePlayer
+                  height={300}
+                  play={true}
+                  videoId={videoCourse.courseTutorialUrl}
+                  onChangeState={onStateChange}
+                />
+                <Pressable
+                  onPress={() => setModalVisible(false)}
+                  style={styles.cancelButton}
+                >
+                  <Text style={styles.buttonText}>
+                    {isWatched ? "DONE" : "CANCEL"}
+                  </Text>
+                </Pressable>
+              </View>
+            </Modal>
           ) : null}
         </Pressable>
       );
@@ -125,6 +143,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+
   lockIcon: {
     position: "absolute",
     top: 8,
@@ -144,7 +163,29 @@ const styles = StyleSheet.create({
   cardDescription: {
     margin: 10,
     padding: 5,
-    color: "blue",
+    color: "black",
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 8,
+    right: 12,
+    
+  },
+  closeButtonIcon: {
+   fontSize: 30,
+    
+  },
+  cancelButton: {
+    backgroundColor: '#93bf85',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

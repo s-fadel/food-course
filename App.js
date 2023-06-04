@@ -5,14 +5,12 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './Home';
 import AboutCourses from './AboutCourses';
 import FilterScreen from './FilterScreen';
 import VideoCourses from './VideoCourses';
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (

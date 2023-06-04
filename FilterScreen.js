@@ -1,10 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-const FilterScreen = ({ setShowFilter, onSelectCategory, navigation }) => {
+const FilterScreen = ({ setShowFilter, onSelectCategory,  }) => {
   const Stack = createStackNavigator()
   const [selectedOption, setSelectedOption] = React.useState(null);
 
